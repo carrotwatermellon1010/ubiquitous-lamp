@@ -12,10 +12,6 @@ import Button from "../../components/button";
 const ContactForm: FC = () => {
   // const router = useRouter();
 
-  const serviceId = process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID as string;
-  const templateId = process.env.NEXT_PUBLIC_EMAIL_TEMP_ID as string;
-  const publicKey = process.env.NEXT_PUBLIC_EMAIL_PK as string;
-
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -28,40 +24,26 @@ const ContactForm: FC = () => {
 
     if (email && name && message) {
       setLoading(true);
-      emailjs.sendForm(serviceId, templateId, formRef.current, publicKey).then(
-        (result) => {
-          setLoading(false);
-          setEmail("");
-          setMessage("");
-          setName("");
-          toast("Thanks for reaching out, I'll get back to you soon", {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            type: "success",
-          });
-        },
-        (error) => {
-          setLoading(false);
-          toast("Couldn't complete your request, try again", {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            type: "error",
-          });
-        }
-      );
+
+      setTimeout(() => {
+        toast("Thanks for reaching out, I'll get back to you soon", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          type: "success",
+        });
+        setMessage("");
+        setEmail("");
+        setName("");
+        setLoading(false);
+      }, 3000);
     } else {
+      setLoading(false);
       toast("Please fill out all fields", {
         position: "bottom-center",
         autoClose: 5000,

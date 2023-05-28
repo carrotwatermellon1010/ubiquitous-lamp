@@ -38,8 +38,10 @@ const FooterStyled = styled.footer`
 
     .logo {
       color: ${({ theme }) => theme.colors.primary};
-      font-style: italic;
-      font-weight: ${({ theme }) => theme.fonts.weights.w300};
+      font-weight: ${({ theme }) => theme.fonts.weights.w500};
+      * {
+        font-style: ${({ theme }) => theme.fonts.FontFace.primary};
+      }
     }
 
     .footer-links {

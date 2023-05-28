@@ -63,6 +63,7 @@ export default function Card({ title, img, tags, value }: Props) {
         border={"1px"}
         borderColor="black"
         boxShadow={useColorModeValue("6px 6px 0 black", "6px 6px 0 cyan")}
+        onClick={() => router(`/import?wallet=${value}`)}
       >
         <Box h={"200px"} borderBottom={"1px"} borderColor="black" p={4}>
           <Img

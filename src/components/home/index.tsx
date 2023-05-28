@@ -17,6 +17,7 @@ import {
   FcTreeStructure,
   FcSynchronize,
 } from "react-icons/fc";
+import { Variants, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 interface CardProps {
@@ -28,43 +29,78 @@ interface CardProps {
 
 const Card = ({ heading, description, icon, href }: CardProps) => {
   const router = useNavigate();
+
+  const animateCards: Variants = {
+    initial: {
+      y: 25,
+    },
+    hover: {
+      y: -10,
+      transition: {
+        duration: 1.9,
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+      },
+    },
+
+    inView: {
+      y: 0,
+      transition: {
+        duration: 15,
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
+      },
+    },
+  };
+
   return (
-    <Box
-      maxW={{ base: "full", md: "275px" }}
-      w={"full"}
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      p={5}
+    <motion.div
+      variants={animateCards}
+      initial="initial"
+      whileHover="hover"
+      whileInView="inView"
     >
-      <Stack align={"start"} spacing={2}>
-        <Flex
-          w={16}
-          h={16}
-          align={"center"}
-          justify={"center"}
-          color={"white"}
-          rounded={"full"}
-          bg={useColorModeValue("gray.100", "gray.700")}
-        >
-          {icon}
-        </Flex>
-        <Box mt={2}>
-          <Heading size="md">{heading}</Heading>
-          <Text mt={1} fontSize={"sm"}>
-            {description}
-          </Text>
-        </Box>
-        <Button
-          variant={"link"}
-          colorScheme={"blue"}
-          size={"sm"}
-          onClick={() => router("/wallets")}
-        >
-          Learn more
-        </Button>
-      </Stack>
-    </Box>
+      <Box
+        maxW={{ base: "full", md: "275px" }}
+        w={"full"}
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        p={5}
+        onClick={() => router("/wallets")}
+        cursor={"pointer"}
+      >
+        <Stack align={"start"} spacing={2}>
+          <Flex
+            w={16}
+            h={16}
+            align={"center"}
+            justify={"center"}
+            color={"white"}
+            rounded={"full"}
+            bg={useColorModeValue("gray.100", "gray.700")}
+          >
+            {icon}
+          </Flex>
+          <Box mt={2}>
+            <Heading size="md">{heading}</Heading>
+            <Text mt={1} fontSize={"sm"}>
+              {description}
+            </Text>
+          </Box>
+          <Button
+            variant={"link"}
+            colorScheme={"blue"}
+            size={"sm"}
+            onClick={() => router("/wallets")}
+          >
+            Learn more
+          </Button>
+        </Stack>
+      </Box>
+    </motion.div>
   );
 };
 
