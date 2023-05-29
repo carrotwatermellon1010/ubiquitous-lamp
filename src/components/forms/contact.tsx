@@ -1,7 +1,6 @@
 import React, { FC, useRef, useState } from "react";
 // import { useRouter } from "next/router";
 import styled from "styled-components";
-import emailjs from "@emailjs/browser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

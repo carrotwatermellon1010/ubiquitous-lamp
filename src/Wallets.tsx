@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 // import { motion, Variants } from "framer-motion";
 
 import NavBar from "./components/nav";
@@ -6,11 +6,35 @@ import Footer from "./components/footer";
 import Card from "./components/card";
 import styled from "styled-components";
 import tokenData from "./utils/tokenData";
+import InputField from "./components/input";
 
 const WalletsPage: FunctionComponent = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const [query, setQuery] = useState("");
+  const [allWallets, setAllWallets] = useState<
+    {
+      label: string;
+      value: string;
+      img: string;
+      tags: string[];
+    }[]
+  >(tokenData);
+
+  useEffect(() => {
+    if (query) {
+      setAllWallets(
+        tokenData.filter((data) =>
+          data.label.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    } else {
+      setAllWallets(tokenData);
+    }
+  }, [query]);
+
   return (
     <WalletBodyStyled>
       <div className="hero-wrap">
@@ -27,8 +51,16 @@ const WalletsPage: FunctionComponent = () => {
           </p>
         </div>
       </div>
+      <div className="search">
+        <InputField
+          placeholder="Search"
+          name="name"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </div>
       <div className="render-cards">
-        {tokenData.map(({ img, label, tags, value }) => (
+        {allWallets.map(({ img, label, tags, value }) => (
           <Card title={label} img={img} tags={tags} key="value" value={value} />
         ))}
       </div>
@@ -73,6 +105,16 @@ const WalletBodyStyled = styled.div`
         color: ${({ theme }) => theme.colors.white};
         margin-right: 6rem;
       }
+    }
+  }
+
+  .search {
+    width: 500px;
+    margin: auto;
+    margin-top: 4rem;
+
+    @media screen and (max-width: 789px) {
+      width: 90%;
     }
   }
 
